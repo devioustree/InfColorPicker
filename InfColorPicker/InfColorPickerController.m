@@ -205,11 +205,33 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 	self = [ super initWithNibName: nibNameOrNil bundle: nibBundleOrNil ];
 	
 	if( self ) {
-		self.navigationItem.title = NSLocalizedString( @"Set Color", 
-									@"InfColorPicker default nav item title" );
+
 	}
 	
 	return self;
+}
+
+- (void)setNavigationControllerTitle:(NSString *)title {
+    UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    title = [title uppercaseString];
+    titleLabel.text = title;
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.font = [UIFont fontWithName:@"ProximaNova-Bold" size:15];
+    [titleLabel sizeToFit];
+    
+    int navBarHeight = 46;
+    if (([UIScreen mainScreen].bounds.size.height == 568)) {
+        navBarHeight = 50;
+    }
+    
+    CGRect titleLabelFrame = titleLabel.frame;
+    titleLabelFrame.origin.x = (self.view.frame.size.width - titleLabelFrame.size.width) / 2;
+    titleLabelFrame.origin.y = ((navBarHeight - titleLabelFrame.size.height) / 2) + 1;
+    titleLabel.frame = titleLabelFrame;
+    
+    [self.navigationController.navigationBar addSubview:titleLabel];
+    
 }
 
 //------------------------------------------------------------------------------
@@ -219,6 +241,8 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
 	[ super viewDidLoad ];
 
 	self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [self setNavigationControllerTitle:NSLocalizedString( @"Set Color", @"InfColorPicker default nav item title" )];
     
     CGFloat nBHeight = (([UIScreen mainScreen].bounds.size.height == 568)) ? 50 : 46;   
     InfColorPickerButton *cancelButton = [InfColorPickerButton buttonWithType:UIButtonTypeCustom];
