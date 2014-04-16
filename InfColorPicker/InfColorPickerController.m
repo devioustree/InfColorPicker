@@ -346,7 +346,7 @@ static void HSVFromUIColor( UIColor* color, float* h, float* s, float* v )
     doneButton.frame = doneButtonFrame;
     [self.navigationController.navigationBar addSubview:doneButton];
 				
-	[ controller presentModalViewController: nav animated: YES ];
+	[controller presentViewController:nav animated:YES completion:nil];
 }
 
 //------------------------------------------------------------------------------
